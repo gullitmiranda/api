@@ -1,0 +1,47 @@
+# Our PostgreSQL service:
+postgres:
+  image: postgres:latest
+  ports:
+    - "5435:5432" # Bind host port 5432 to PostgreSQL port 5432
+  volumes:
+    - ./db/dumps:/app-db-dumps # We're mounting this folder so we can backup/restore database dumps from our app folder.
+    - ./db/initdb.d/postgres-setup.sql:/docker-entrypoint-initdb.d/setup.sql
+  environment:
+    #LC_ALL: C.UTF-8
+    POSTGRES_PASSWORD: 3xS!gn3d
+# Our Redis service:
+redis:
+  image: redis:3.0.4
+  ports:
+    - "6379:6379" # Bind host port 6379 to Redis port 6379
+
+api: &backend_base
+  build: .
+  dockerfile: Dockerfile-dev
+  ports:
+   - "8080:80"
+  volumes:
+   - .:/var/www
+  ##############################################################################
+  # With linked containers, Docker writes entries to the container's /etc/hosts.
+  # We'll try here naming the entries docker will insert into the
+  # container's /etc/hosts, so we can use more familiar URL's for our app - See
+  # this container's environment section below:
+  links: &app_links
+    - postgres:postgres.local
+    - redis:redis.local
+  environment: &app_environment
+    # PostgreSQL Development Database:
+    DATABASE_URL: postgres://postgres:3xS!gn3d@postgres.local:5432/signed_development?pool=25&encoding=unicode&schema_search_path=public
+
+    # Redis Database:
+    REDIS_URL: redis://redis.local:6379
+
+tests:
+  <<: *backend_base # We copy from &backend_base, and override:
+  ports: []
+  command:
+  environment:
+    <<: *app_environment
+    # PostgreSQL Test Database:
+    DATABASE_URL: postgres://postgres:3xS!gn3d@postgres.local:5432/signed_test?pool=25&encoding=unicode&schema_search_path=public
