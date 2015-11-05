@@ -1,6 +1,33 @@
 Contenttic CMS API
 ==============================
 
+One API-first content management system for static site generators
+
+Core ideas
+----------
+### API-first
+
+This enables developers to manage content with code via an API and makes it possible for non-technical writers to manage content with an [web app](https://github.com/contenttic/editor).
+
+### Free content
+
+We don't take your data and lock it up, you put it in one Storage Provider so you have access to it anytime, anywhere.
+We will support:
+- Github
+- Bitbucket
+- Dropbox
+- Copy
+- AWS-S3
+
+### Content for Static Site Generators
+
+We will save and get the data using adapters for this Site Generators:
+
+- Jekkyl
+- Hugo
+
+To support another static site generator you just have to provide one adapter following the interfaces.
+
 Requirements
 ------------
 
@@ -69,6 +96,11 @@ reasonable error log settings in place. For the built-in PHP web server, errors 
 the console itself; otherwise, ensure you have an error log file specified in your configuration.
 
 `display_errors` should *never* be enabled in production, regardless.
+
+
+### AZK
+
+If you develop or deploy using [azk app](http://www.azk.io/), we provide the azkfile.js and the `Run project` button to quickly and safely run the project on your local machine.
 
 ### Docker
 
