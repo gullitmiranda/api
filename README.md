@@ -1,6 +1,8 @@
 Contenttic CMS API
 ==============================
 
+[![Run project](https://s3-sa-east-1.amazonaws.com/assets.azk.io/run-project.png)](http://run.azk.io/start/?repo=contenttic/api&ref=azkfile)
+
 One API-first content management system for static site generators
 
 Core ideas
@@ -36,22 +38,48 @@ Please see the [composer.json](composer.json) file.
 Installation
 ------------
 
-### Via Git (clone)
+### AZK
 
-First, clone the repository:
+We advise the use of azk for the setup and orchestration of the project.
+If you do not know the tool, take a look here: [azk app](http://www.azk.io/).
 
+With azk properly installed, run (on project folder):
 ```bash
-git clone https://github.com/contenttic/api.git # optionally, specify the directory in which to clone
-cd path/to/install
+azk start
+```
+or clicking the `Run Project` button.
+
+### Docker
+
+If you develop or deploy using Docker, we provide both development and production configuration for
+you.
+
+#### Development
+
+Prepare your development environment using [docker compose](https://docs.docker.com/compose/install/):
+```bash
+cd api
+
+docker-compose build
 ```
 
-At this point, you need to use [Composer](https://getcomposer.org/) to install
-dependencies. Assuming you already have Composer:
-
+Start the development environment:
 ```bash
-composer.phar install
+docker-compose up
+```
+Access your editor from `http://localhost:8080/` or `http://<boot2docker ip>:8080/` if on Windows or Mac.
+
+#### Production
+
+Use the included [Dockerfile](https://docs.docker.com/reference/builder/) to build an [Apache](http://httpd.apache.org/) container:
+```bash
+docker build -t apighost .
 ```
 
+Test your container:
+```bash
+docker run -it -p "80:80" apighost
+```
 ### All methods
 
 Now, fire it up! Do one of the following:
@@ -96,40 +124,3 @@ reasonable error log settings in place. For the built-in PHP web server, errors 
 the console itself; otherwise, ensure you have an error log file specified in your configuration.
 
 `display_errors` should *never* be enabled in production, regardless.
-
-
-### AZK
-
-If you develop or deploy using [azk app](http://www.azk.io/), we provide the azkfile.js and the `Run project` button to quickly and safely run the project on your local machine.
-
-### Docker
-
-If you develop or deploy using Docker, we provide both development and production configuration for
-you.
-
-#### Development
-
-Prepare your development environment using [docker compose](https://docs.docker.com/compose/install/):
-```bash
-cd api
-
-docker-compose build
-```
-
-Start the development environment:
-```bash
-docker-compose up
-```
-Access your editor from `http://localhost:8080/` or `http://<boot2docker ip>:8080/` if on Windows or Mac.
-
-#### Production
-
-Use the included [Dockerfile](https://docs.docker.com/reference/builder/) to build an [Apache](http://httpd.apache.org/) container:
-```bash
-docker build -t apighost .
-```
-
-Test your container:
-```bash
-docker run -it -p "80:80" apighost
-```
