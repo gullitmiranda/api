@@ -1,7 +1,7 @@
 Contenttic CMS API
 ==============================
 
-[![Run project](https://s3-sa-east-1.amazonaws.com/assets.azk.io/run-project.png)](http://run.azk.io/start/?repo=contenttic/api&ref=azkfile)
+[![run project](https://s3-sa-east-1.amazonaws.com/assets.azk.io/run-project.png)](http://run.azk.io/start/?repo=contenttic/api)
 
 One API-first content management system for static site generators
 
